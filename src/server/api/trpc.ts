@@ -25,6 +25,7 @@ import { prisma } from "~/server/db";
 
 type CreateContextOptions = {
   session: Session | null;
+  req: any,
 };
 
 /**
@@ -41,6 +42,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    req: opts.req,
   };
 };
 
@@ -58,6 +61,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
   return createInnerTRPCContext({
     session,
+    req,
   });
 };
 
